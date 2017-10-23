@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.android.volley.Request;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnConnectionFaile
     private TextView txtRadius;
     private SeekBar seekBar;
     private int locationRadius;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnConnectionFaile
         txt = (TextView) findViewById(R.id.textView);
         txtRadius = (TextView) findViewById(R.id.txtRadius);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         mRandom = new Random();
         mFusedLocationClient = new FusedLocationProviderClient(this);
         locationRadius = 500;
@@ -147,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements OnConnectionFaile
             JSONArray array = result.getJSONArray("results");
             JSONObject obj = array.getJSONObject(mRandom.nextInt(array.length()));
             txt.setText(obj.getString("name"));
+            ratingBar.setRating((float)obj.getDouble("rating"));
         }
         catch (JSONException e){
             txt.setText("parseLocationError " + e.getMessage());
